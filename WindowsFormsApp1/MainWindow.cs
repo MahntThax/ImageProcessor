@@ -437,32 +437,78 @@ namespace ImageProcessor
 
             float alfa = 255;
             alfa = alfa / (imgArrayFinal.Length / 4);
-            int pixel = 0;
-
-            
-            int[] histograma = new int[256], histograma_acumulado = new int[256];
+            int pixel = 0, pixelR = 0, pixelG = 0, pixelB = 0;
+            int[] histograma, histograma_acumulado, histogramaR, histogramaG, histogramaB, histogramaRacumulado, histogramaGacumulado, histogramaBacumulado;
             int[] histogramaPosicao = new int[imgArrayFinal.Length / 4];
             int index = 0;
+            histograma = histograma_acumulado = histogramaR = histogramaG = histogramaB = histogramaRacumulado = histogramaGacumulado = histogramaBacumulado = new int[256];
 
-            for (int pos = 0; pos < imgArrayFinal.Length; pos += 4)     //calcula histograma
+            if (ColorCheck().colored)
             {
-                pixel = imgArrayFinal[pos];
-                histograma[pixel] = histograma[pixel] + 1;
-                histogramaPosicao[index] = pixel;
-                index++;
+                for (int pos = 0; pos < imgArrayFinal.Length; pos += 4)         //calcula histograma para cada canal
+                {
+                    pixelR = imgArrayFinal[pos];
+                    pixelG = imgArrayFinal[pos + 1];
+                    pixelB = imgArrayFinal[pos + 2];
+                    histogramaR[pixelR] = histogramaR[pixelR] + 1;
+                    histogramaG[pixelG] = histogramaG[pixelG] + 1;
+                    histogramaB[pixelB] = histogramaB[pixelB] + 1;
+                    histogramaPosicao[index] = pixelR;
+                    index++;
+                }
+
+                //necessario uma variavel auxiliar pois estava passando como 0 se feita a multiplicação direta
+                float auxR = alfa * histogramaR[0];
+                float auxG = alfa * histogramaG[0];
+                float auxB = alfa * histogramaB[0];
+                histogramaRacumulado[0] = (int)auxR;
+                histogramaGacumulado[0] = (int)auxG;
+                histogramaBacumulado[0] = (int)auxB;
+
+                for(int pos = 1; pos < histogramaR.Length; pos++)
+                {
+                    auxR = histogramaRacumulado[pos - 1] + alfa * histogramaR[pos];
+                    auxG = histogramaGacumulado[pos - 1] + alfa * histogramaG[pos];
+                    auxB = histogramaBacumulado[pos - 1] + alfa * histogramaB[pos];
+                    histogramaRacumulado[pos] = (int)auxR;
+                    histogramaGacumulado[pos] = (int)auxG;
+                    histogramaBacumulado[pos] = (int)auxB;
+                }
+
+                index = 0;
+                for (int pos = 0; pos < imgArrayFinal.Length; pos += 4)
+                {
+                    imgArrayFinal[pos] = (byte)histogramaRacumulado[histogramaPosicao[index]];
+                    imgArrayFinal[pos + 1] = (byte)histogramaGacumulado[histogramaPosicao[index]];
+                    imgArrayFinal[pos + 2] = (byte)histogramaBacumulado[histogramaPosicao[index]];
+                    index++;
+                }
             }
-            float aux = alfa * histograma[0];
-            histograma_acumulado[0] = (int)aux;
-            for(int pos = 1; pos < histograma.Length;pos++)
+            else
             {
-                aux = histograma_acumulado[pos - 1] + alfa * histograma[pos];
-                histograma_acumulado[pos] = (int)aux;
-            }
-            index = 0;
-            for (int pos = 0; pos < imgArrayFinal.Length; pos += 4)
-            {
-                imgArrayFinal[pos] = imgArrayFinal[pos + 1] = imgArrayFinal[pos + 2] = (byte)histograma_acumulado[histogramaPosicao[index]];
-                index++;
+                for (int pos = 0; pos < imgArrayFinal.Length; pos += 4)         //calcula histograma
+                {
+                    pixel = imgArrayFinal[pos];
+                    histograma[pixel] = histograma[pixel] + 1;
+                    histogramaPosicao[index] = pixel;
+                    index++;
+                }
+
+                float aux = alfa * histograma[0];
+                histograma_acumulado[0] = (int)aux;
+
+                for (int pos = 1; pos < histograma.Length; pos++)               //calcula histograma acumulado
+                {
+                    aux = histograma_acumulado[pos - 1] + alfa * histograma[pos];
+                    histograma_acumulado[pos] = (int)aux;
+                }
+
+                index = 0;
+                for (int pos = 0; pos < imgArrayFinal.Length; pos += 4)
+                {
+                    imgArrayFinal[pos] = imgArrayFinal[pos + 1] = imgArrayFinal[pos + 2] = (byte)histograma_acumulado[histogramaPosicao[index]];
+                    index++;
+                }
             }
 
             Marshal.Copy(imgArrayFinal, 0, ptrImage, bytes);
