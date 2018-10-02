@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.IO;
 
-namespace WindowsFormsApp1
+namespace ImageProcessor
 {
     static class Program
     {

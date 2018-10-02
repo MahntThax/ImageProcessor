@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApp1
+﻿namespace ImageProcessor
 {
     partial class ImagemOriginal
     {
