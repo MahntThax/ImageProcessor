@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.CaixaImagem = new System.Windows.Forms.PictureBox();
+            this.zoomInButton = new System.Windows.Forms.Button();
+            this.zoomOutButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.CaixaImagem)).BeginInit();
             this.SuspendLayout();
             // 
@@ -42,12 +44,33 @@
             this.CaixaImagem.TabStop = false;
             this.CaixaImagem.Click += new System.EventHandler(this.CaixaImagem_Click);
             // 
+            // zoomInButton
+            // 
+            this.zoomInButton.Location = new System.Drawing.Point(476, 13);
+            this.zoomInButton.Name = "zoomInButton";
+            this.zoomInButton.Size = new System.Drawing.Size(75, 23);
+            this.zoomInButton.TabIndex = 1;
+            this.zoomInButton.Text = "Zoom In";
+            this.zoomInButton.UseVisualStyleBackColor = true;
+            this.zoomInButton.Click += new System.EventHandler(this.zoomInButton_Click);
+            // 
+            // zoomOutButton
+            // 
+            this.zoomOutButton.Location = new System.Drawing.Point(476, 42);
+            this.zoomOutButton.Name = "zoomOutButton";
+            this.zoomOutButton.Size = new System.Drawing.Size(75, 23);
+            this.zoomOutButton.TabIndex = 2;
+            this.zoomOutButton.Text = "Zoom Out";
+            this.zoomOutButton.UseVisualStyleBackColor = true;
+            // 
             // ImagemOriginal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(496, 473);
+            this.ClientSize = new System.Drawing.Size(559, 473);
+            this.Controls.Add(this.zoomOutButton);
+            this.Controls.Add(this.zoomInButton);
             this.Controls.Add(this.CaixaImagem);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "ImagemOriginal";
@@ -61,5 +84,7 @@
         #endregion
 
         private System.Windows.Forms.PictureBox CaixaImagem;
+        private System.Windows.Forms.Button zoomInButton;
+        private System.Windows.Forms.Button zoomOutButton;
     }
 }

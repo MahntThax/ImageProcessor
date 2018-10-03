@@ -279,7 +279,7 @@ namespace ImageProcessor
 
         private void histogramGenerate()
         {
-            //inicialização do lockbits para poder calcular o histograma
+            //inicialização do lockbits para poder manipular a imagem
             Bitmap tempImage = new Bitmap(CopyImage);
             BitmapData TempImageData = tempImage.LockBits(new Rectangle(0, 0, tempImage.Width, tempImage.Height), ImageLockMode.ReadWrite, tempImage.PixelFormat);
             IntPtr ptrImage = TempImageData.Scan0;                              //ponteiro do inicio da imagem
@@ -302,7 +302,7 @@ namespace ImageProcessor
 
         private void change_brightness()
         {
-            //inicialização do lockbits para poder alterar brilho
+            //inicialização do lockbits para poder manipular a imagem
             Bitmap tempImage = new Bitmap(CopyImage);
             BitmapData TempImageData = tempImage.LockBits(new Rectangle(0, 0, tempImage.Width, tempImage.Height), ImageLockMode.ReadWrite, tempImage.PixelFormat);
             IntPtr ptrImage = TempImageData.Scan0;                              //ponteiro do inicio da imagem
@@ -346,7 +346,7 @@ namespace ImageProcessor
 
         private void change_contrast()
         {
-            //inicialização do lockbits para poder alterar brilho
+            //inicialização do lockbits para poder manipular a imagem
             Bitmap tempImage = new Bitmap(CopyImage);
             BitmapData TempImageData = tempImage.LockBits(new Rectangle(0, 0, tempImage.Width, tempImage.Height), ImageLockMode.ReadWrite, tempImage.PixelFormat);
             IntPtr ptrImage = TempImageData.Scan0;                              //ponteiro do inicio da imagem
@@ -390,7 +390,7 @@ namespace ImageProcessor
 
         private void Negative_Image()
         {
-            //inicialização do lockbits para poder alterar brilho
+            //inicialização do lockbits para poder manipular a imagem
             Bitmap tempImage = new Bitmap(CopyImage);
             BitmapData TempImageData = tempImage.LockBits(new Rectangle(0, 0, tempImage.Width, tempImage.Height), ImageLockMode.ReadWrite, tempImage.PixelFormat);
             IntPtr ptrImage = TempImageData.Scan0;                              //ponteiro do inicio da imagem
@@ -427,7 +427,7 @@ namespace ImageProcessor
 
         private void Equalization()
         {
-            //inicialização do lockbits para poder alterar brilho
+            //inicialização do lockbits para poder manipular a imagem
             Bitmap tempImage = new Bitmap(CopyImage);
             BitmapData TempImageData = tempImage.LockBits(new Rectangle(0, 0, tempImage.Width, tempImage.Height), ImageLockMode.ReadWrite, tempImage.PixelFormat);
             IntPtr ptrImage = TempImageData.Scan0;                              //ponteiro do inicio da imagem
